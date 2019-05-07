@@ -1,0 +1,36 @@
+description: chowns a directory
+name: github.com/opspec-pkgs/fs.chown-dir
+inputs:
+  dir:
+    dir:
+      description: directory to chown
+  userId:
+    number:
+      constraints:
+        format: integer
+      default: 0
+      description: user id to apply
+  groupId:
+    number:
+      constraints:
+        format: integer
+      default: 0
+      description: group id to apply
+opspec: 0.1.6
+outputs:
+  dir:
+    dir:
+      description: the chowned directory
+version: 1.0.0
+run:
+  container:
+    cmd: 
+      - chown
+      - -R
+      - $(userId):$(groupId)
+      - /dir
+    dirs:
+      /dir: $(dir)
+    image: { ref: 'alpine:3.9' }
+    workDir: /dir
+
